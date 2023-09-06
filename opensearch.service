@@ -1,0 +1,47 @@
+[Unit]
+Description=Opensearch
+Documentation=https://opensearch.org/docs/latest
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+RuntimeDirectory=opensearch
+PrivateTmp=true
+
+Restart=on-failure
+RestartSec=60s
+
+WorkingDirectory=/opt/opensearch
+
+User=opensearch
+Group=opensearch
+
+ExecStart=/opt/opensearch/bin/opensearch
+
+StandardOutput=journal
+StandardError=inherit
+
+# Specifies the maximum file descriptor number that can be opened by this process
+LimitNOFILE=65535
+
+# Specifies the maximum number of processes
+LimitNPROC=4096
+
+# Specifies the maximum size of virtual memory
+LimitAS=infinity
+
+# Specifies the maximum file size
+LimitFSIZE=infinity
+
+# Not use SWAP
+LimitMEMLOCK=infinity
+
+# Disable timeout logic and wait until process is stopped
+TimeoutStopSec=0
+
+# Allow a slow startup before the systemd notifier module kicks in to extend the timeout
+TimeoutStartSec=75
+
+[Install]
+WantedBy=multi-user.target
