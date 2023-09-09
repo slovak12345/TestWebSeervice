@@ -1,3 +1,7 @@
 #!/bin/sh
 
 docker build -t ubuntu-serv:0.0.1 .
+docker run -d -p 9200:9200 -p 9600:9600 -p 10601:10601 -e "discovery.type=single-node" ubuntu-serv:0.0.1
+sleep 60
+curl https://localhost:9200 -ku 'admin:admin'
+echo "Command for admin panel curl https://localhost:9200 -ku \'admin:admin\'"
