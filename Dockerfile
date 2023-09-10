@@ -8,6 +8,7 @@ sudo \
 curl \
 git \
 cmake \
+nano \
 pkg-config \
 flex \ 
 bison \
@@ -16,15 +17,15 @@ build-essential \
 libssl-dev \
 libyaml-dev \
 libedit-dev \
-libsystemd-dev
+libsystemd-dev \
+python3 \
+python3-venv \
+python3-pip
+
 
 RUN groupadd opensearch \
 && useradd opensearch -g opensearch -M -s /bin/bash \
 && echo 'opensearch:Docker!' | chpasswd
-
-RUN groupadd logstash \
-&& useradd logstash -g logstash -M -s /bin/bash \
-&& echo 'logstash:Docker!' | chpasswd
 
 RUN groupadd fluentbit \
 && useradd fluentbit -g fluentbit -M -s /bin/bash \
@@ -70,7 +71,7 @@ RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/
 RUN chown -R opensearch:opensearch /opt/opensearch/config/
 RUN chown -R fluentbit:fluentbit /usr/local/etc/fluent-bit
 
-EXPOSE 9200 5601 9600 10601
+EXPOSE 9200 9600 10601
 COPY docker-entrypoint.sh /
 RUN chmod 755 /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
