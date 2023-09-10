@@ -66,10 +66,13 @@ RUN wget https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/
 COPY data/opensearch-dashboards/config/* /opt/opensearch-dashboards/config
 COPY data/opensearch/config/* /opt/opensearch/config/
 COPY data/fluent-bit/usr/local/etc/fluent-bit/* /usr/local/etc/fluent-bit
+COPY log.py /home
 
 RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/
 RUN chown -R opensearch:opensearch /opt/opensearch/config/
 RUN chown -R fluentbit:fluentbit /usr/local/etc/fluent-bit
+
+RUN pip install python-json-logger
 
 EXPOSE 9200 9600 10601
 COPY docker-entrypoint.sh /

@@ -38,22 +38,8 @@ def thread2():
         logger2.critical(f"{i}:This is a critical message")
         time.sleep(1)
     print("Thread 2 finished")
-#logging.basicConfig()
-#logger = logging.getLogger('log_example')
-#logger.setLevel(logging.INFO)
-
-#stdout_handler = logging.StreamHandler(stream=sys.stdout)
-#format_output = logging.Formatter('%(levelname)s : %(name)s : %(message)s : %(asctime)s')
 # format with JSON
 format_output = jsonlogger.JsonFormatter('%(levelname)s : %(name)s : %(message)s : %(asctime)s : %(pathname)s')
-## Creat a stdout handler
-#stdout_handler.setFormatter(format_output)
-#logger.addHandler(stdout_handler)
-
-## Create a file handler
-#file_handler = logging.FileHandler("app.log")
-#file_handler.setFormatter(format_output)
-#logger.addHandler(file_handler)
 
 th1 = threading.Thread(target=thread1)
 th2 = threading.Thread(target=thread2)
