@@ -1,0 +1,7 @@
+profiles:
+    - name: docker-local
+      endpoint: https://localhost:9200
+      user: admin
+      password: admin
+      max_retry: 3
+      timeout: 10
