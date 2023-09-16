@@ -8,6 +8,7 @@ sudo \
 curl \
 git \
 cmake \
+nano \
 pkg-config \
 flex \ 
 bison \
@@ -18,16 +19,12 @@ libyaml-dev \
 libedit-dev \
 libsystemd-dev \
 python3 \
-pip \
-python3-venv 
+python3-venv \
+python3-pip
 
 RUN groupadd opensearch \
 && useradd opensearch -g opensearch -M -s /bin/bash \
 && echo 'opensearch:Docker!' | chpasswd
-
-RUN groupadd logstash \
-&& useradd logstash -g logstash -M -s /bin/bash \
-&& echo 'logstash:Docker!' | chpasswd
 
 RUN groupadd fluentbit \
 && useradd fluentbit -g fluentbit -M -s /bin/bash \
@@ -81,12 +78,15 @@ COPY data/opensearch-dashboards/config/* /opt/opensearch-dashboards/config
 COPY data/opensearch/config/* /opt/opensearch/config/
 COPY data/fluent-bit/usr/local/etc/fluent-bit/* /usr/local/etc/fluent-bit
 COPY data/opensearch-cli/config.yaml ~/.opensearch-cli/config.yaml
+COPY log.py /home
 
 RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
 && chown -R opensearch:opensearch /opt/opensearch/config/ \
 && chown -R fluentbit:fluentbit /usr/local/etc/fluent-bit
 
-EXPOSE 9200 5601 9600 10601
+RUN pip install python-json-logger
+
+EXPOSE 9200 9600 10601
 COPY docker-entrypoint.sh /
 RUN chmod 755 /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
