@@ -89,6 +89,7 @@ RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
 && chown -R fluentbit:fluentbit /usr/local/etc/fluent-bit
 
 RUN pip install python-json-logger
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 EXPOSE 9200 9600 10601
 COPY Docker/webservice/docker-entrypoint.sh /
