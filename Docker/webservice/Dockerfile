@@ -47,12 +47,13 @@ RUN wget https://artifacts.opensearch.org/releases/bundle/opensearch/2.9.0/opens
 && chown -R opensearch /var/log/opensearch \
 && rm opensearch-2.9.0-linux-x64.tar.gz
 
-RUN git clone https://github.com/fluent/fluent-bit \
-&& cd fluent-bit/build/ \
+RUN wget https://github.com/fluent/fluent-bit/archive/refs/tags/v2.1.10.zip \
+&& unzip v2.1.10.zip \
+&& cd fluent-bit-2.1.10/build/ \
 && cmake ../ \
 && make \
 && make install \
-&& rm -r /fluent-bit
+&& rm -r /fluent-bit-2.1.10
 
 RUN wget https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/2.9.0/opensearch-dashboards-2.9.0-linux-x64.tar.gz \
 && chmod +x opensearch-dashboards-2.9.0-linux-x64.tar.gz \
