@@ -31,6 +31,9 @@ RUN groupadd fluentbit \
 && echo 'fluentbit:Docker!' | chpasswd
 
 COPY opensearch.service /lib/systemd/system/
+COPY src .
+
+RUN pip install -r system-component-template/requirements-test.txt && pip install -r system-component-template/requirements.txt
 
 RUN wget https://artifacts.opensearch.org/releases/bundle/opensearch/2.9.0/opensearch-2.9.0-linux-x64.tar.gz \
 && chmod +x opensearch-2.9.0-linux-x64.tar.gz \
@@ -44,12 +47,13 @@ RUN wget https://artifacts.opensearch.org/releases/bundle/opensearch/2.9.0/opens
 && chown -R opensearch /var/log/opensearch \
 && rm opensearch-2.9.0-linux-x64.tar.gz
 
-RUN git clone https://github.com/fluent/fluent-bit \
-&& cd fluent-bit/build/ \
+RUN wget https://github.com/fluent/fluent-bit/archive/refs/tags/v2.1.10.zip \
+&& unzip v2.1.10.zip \
+&& cd fluent-bit-2.1.10/build/ \
 && cmake ../ \
 && make \
 && make install \
-&& rm -r /fluent-bit
+&& rm -r /fluent-bit-2.1.10
 
 RUN wget https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/2.9.0/opensearch-dashboards-2.9.0-linux-x64.tar.gz \
 && chmod +x opensearch-dashboards-2.9.0-linux-x64.tar.gz \
@@ -74,9 +78,9 @@ RUN wget https://artifacts.opensearch.org/opensearch-clients/opensearch-cli/open
 && rm opensearch-cli-1.1.0-linux-x64.zip
 
 
-COPY data/opensearch-dashboards/config/* /opt/opensearch-dashboards/config
+COPY data/opensearch-dashboards/config/* /opt/opensearch-dashboards/config/
 COPY data/opensearch/config/* /opt/opensearch/config/
-COPY data/fluent-bit/usr/local/etc/fluent-bit/* /usr/local/etc/fluent-bit
+COPY data/fluent-bit/usr/local/etc/fluent-bit/* /usr/local/etc/fluent-bit/
 COPY data/opensearch-cli/config.yaml ~/.opensearch-cli/config.yaml
 COPY log.py /home
 
@@ -85,8 +89,9 @@ RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
 && chown -R fluentbit:fluentbit /usr/local/etc/fluent-bit
 
 RUN pip install python-json-logger
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 EXPOSE 9200 9600 10601
-COPY docker-entrypoint.sh /
+COPY Docker/webservice/docker-entrypoint.sh /
 RUN chmod 755 /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
