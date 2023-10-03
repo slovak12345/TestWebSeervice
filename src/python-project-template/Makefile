@@ -45,7 +45,7 @@ test: lint        ## Run tests and generate coverage report.
 
 .PHONY: watch
 watch:            ## Run tests on every change.
-	ls **/**.py | entr $(ENV_PREFIX)pytest --picked=first -s -vvv -l --tb=long --maxfail=1 tests/
+	ls **/**.py | entr $(ENV_PREFIX)pytest -s -vvv -l --tb=long --maxfail=1 tests/
 
 .PHONY: clean
 clean:            ## Clean unused files.
@@ -78,12 +78,12 @@ virtualenv:       ## Create a virtual environment.
 release:          ## Create a new tag for release.
 	@echo "WARNING: This operation will create s version tag and push to github"
 	@read -p "Version? (provide the next x.y.z semver) : " TAG
-	@echo "creating git tag : $${TAG}"
-	@git tag $${TAG}
 	@echo "$${TAG}" > project_name/VERSION
 	@$(ENV_PREFIX)gitchangelog > HISTORY.md
 	@git add project_name/VERSION HISTORY.md
 	@git commit -m "release: version $${TAG} 🚀"
+	@echo "creating git tag : $${TAG}"
+	@git tag $${TAG}
 	@git push -u origin HEAD --tags
 	@echo "Github Actions will detect the new tag and release the new version."
 
@@ -91,7 +91,7 @@ release:          ## Create a new tag for release.
 docs:             ## Build the documentation.
 	@echo "building documentation ..."
 	@$(ENV_PREFIX)mkdocs build
-	URL="site/index.html"; xdg-open $$URL || sensible-browser $$URL || x-www-browser $$URL || gnome-open $$URL  || open $$URL
+	URL="site/index.html"; xdg-open $$URL || sensible-browser $$URL || x-www-browser $$URL || gnome-open $$URL
 
 .PHONY: switch-to-poetry
 switch-to-poetry: ## Switch to poetry package manager.
@@ -115,8 +115,8 @@ switch-to-poetry: ## Switch to poetry package manager.
 init:             ## Initialize the project based on an application template.
 	@./.github/init.sh
 
-.PHONY: shell
-shell:            ## Open a shell in the project.
-	@if [ "$(USING_POETRY)" ]; then poetry shell; exit; fi
-	@./.venv/bin/ipython -c "from project_name import *"
 
+# This project has been generated from rochacbruno/python-project-template
+# __author__ = 'rochacbruno'
+# __repo__ = https://github.com/rochacbruno/python-project-template
+# __sponsor__ = https://github.com/sponsors/rochacbruno/
