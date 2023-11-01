@@ -33,7 +33,7 @@ RUN groupadd fluentbit \
 COPY opensearch.service /lib/systemd/system/
 COPY src .
 
-RUN pip install -r system-component-template/requirements-test.txt && pip install -r system-component-template/requirements.txt
+RUN pip install -r python-project-template/requirements-test.txt && pip install -r python-project-template/requirements.txt
 
 RUN wget https://artifacts.opensearch.org/releases/bundle/opensearch/2.9.0/opensearch-2.9.0-linux-x64.tar.gz \
 && chmod +x opensearch-2.9.0-linux-x64.tar.gz \
@@ -77,11 +77,25 @@ RUN wget https://artifacts.opensearch.org/opensearch-clients/opensearch-cli/open
 && chown -R opensearch /var/log/opensearch-cli \
 && rm opensearch-cli-1.1.0-linux-x64.zip
 
+RUN apt-get install gnupg curl
+
+RUN curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
+   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
+   --dearmor
+
+RUN echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update
+
+RUN apt-get install -y mongodb-org
 
 COPY data/opensearch-dashboards/config/* /opt/opensearch-dashboards/config/
 COPY data/opensearch/config/* /opt/opensearch/config/
 COPY data/fluent-bit/usr/local/etc/fluent-bit/* /usr/local/etc/fluent-bit/
 COPY data/opensearch-cli/config.yaml ~/.opensearch-cli/config.yaml
+COPY data/mongodb/mongod.conf /etc/
 COPY log.py /home
 
 RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
@@ -91,7 +105,10 @@ RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
 RUN pip install python-json-logger
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-EXPOSE 9200 9600 10601
+ENV MONGO_INITDB_ROOT_USERNAME=admin_mdb
+ENV MONGO_INITDB_ROOT_PASSWORD=password_mdb
+
+EXPOSE 9200 9600 10601 27017
 COPY Docker/webservice/docker-entrypoint.sh /
 RUN chmod 755 /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
