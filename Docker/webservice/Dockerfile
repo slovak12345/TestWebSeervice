@@ -20,7 +20,11 @@ libedit-dev \
 libsystemd-dev \
 python3 \
 python3-venv \
-python3-pip
+python3-pip \
+redis \
+tcpdump \
+nodejs
+
 
 RUN groupadd opensearch \
 && useradd opensearch -g opensearch -M -s /bin/bash \
@@ -103,7 +107,10 @@ RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
 && chown -R fluentbit:fluentbit /usr/local/etc/fluent-bit
 
 RUN pip install python-json-logger
+RUN pip install supervisor
 RUN ln -s /usr/bin/python3 /usr/bin/python
+
+COPY data/supervisord/supervisord.conf /etc
 
 ENV MONGO_INITDB_ROOT_USERNAME=admin_mdb
 ENV MONGO_INITDB_ROOT_PASSWORD=password_mdb
