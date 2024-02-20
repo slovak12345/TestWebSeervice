@@ -1,5 +1,7 @@
 FROM ubuntu:22.04
 
+RUN echo 'Acquire::Retries "5";' > /etc/apt/apt.conf.d/80-retries
+
 RUN apt update && apt install -y \
 openjdk-11-jdk \
 unzip \
@@ -22,7 +24,8 @@ python3 \
 python3-venv \
 python3-pip \
 tcpdump \
-nodejs
+nodejs \
+lsb-core
 
 
 RUN groupadd opensearch \
@@ -97,7 +100,7 @@ RUN apt-get install -y mongodb-org
 RUN curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg \
 && echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list \
 && apt-get update \
-&& apt-get install redis
+&& apt-get install redis -y
 
 COPY data/opensearch-dashboards/config/* /opt/opensearch-dashboards/config/
 COPY data/opensearch/config/* /opt/opensearch/config/
@@ -105,7 +108,7 @@ COPY data/fluent-bit/usr/local/etc/fluent-bit/* /usr/local/etc/fluent-bit/
 COPY data/opensearch-cli/config.yaml ~/.opensearch-cli/config.yaml
 COPY data/mongodb/mongod.conf /etc/
 COPY log.py /home
-COPY data/redis/redis.conf /etc/redis/redis.conf
+# COPY data/redis/redis.conf /etc/redis/redis.conf
 
 RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
 && chown -R opensearch:opensearch /opt/opensearch/config/ \
@@ -115,7 +118,7 @@ RUN pip install python-json-logger
 RUN pip install supervisor
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-COPY data/supervisord/supervisord.conf /etc
+# COPY data/supervisord/supervisord.conf /etc
 
 ENV MONGO_INITDB_ROOT_USERNAME=admin_mdb
 ENV MONGO_INITDB_ROOT_PASSWORD=password_mdb
