@@ -108,7 +108,7 @@ COPY data/fluent-bit/usr/local/etc/fluent-bit/* /usr/local/etc/fluent-bit/
 COPY data/opensearch-cli/config.yaml ~/.opensearch-cli/config.yaml
 COPY data/mongodb/mongod.conf /etc/
 COPY log.py /home
-# COPY data/redis/redis.conf /etc/redis/redis.conf
+COPY data/redis/redis.conf /etc/redis/redis.conf
 
 RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
 && chown -R opensearch:opensearch /opt/opensearch/config/ \
@@ -118,7 +118,7 @@ RUN pip install python-json-logger
 RUN pip install supervisor
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-# COPY data/supervisord/supervisord.conf /etc
+COPY data/supervisord/supervisord.conf /etc
 
 ENV MONGO_INITDB_ROOT_USERNAME=admin_mdb
 ENV MONGO_INITDB_ROOT_PASSWORD=password_mdb
