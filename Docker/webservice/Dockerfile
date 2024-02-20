@@ -21,7 +21,6 @@ libsystemd-dev \
 python3 \
 python3-venv \
 python3-pip \
-redis \
 tcpdump \
 nodejs
 
@@ -95,12 +94,18 @@ RUN apt-get update
 
 RUN apt-get install -y mongodb-org
 
+RUN curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg \
+&& echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list \
+&& apt-get update \
+&& apt-get install redis
+
 COPY data/opensearch-dashboards/config/* /opt/opensearch-dashboards/config/
 COPY data/opensearch/config/* /opt/opensearch/config/
 COPY data/fluent-bit/usr/local/etc/fluent-bit/* /usr/local/etc/fluent-bit/
 COPY data/opensearch-cli/config.yaml ~/.opensearch-cli/config.yaml
 COPY data/mongodb/mongod.conf /etc/
 COPY log.py /home
+COPY data/redis/redis.conf /etc/redis/redis.conf
 
 RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
 && chown -R opensearch:opensearch /opt/opensearch/config/ \
