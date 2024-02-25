@@ -36,6 +36,14 @@ RUN groupadd fluentbit \
 && useradd fluentbit -g fluentbit -M -s /bin/bash \
 && echo 'fluentbit:Docker!' | chpasswd
 
+RUN groupadd gcs \
+&& useradd gcs -g gcs -M -s /bin/bash \
+&& echo 'gcs:Docker!' | chpasswd
+
+RUN groupadd gcs-cloud \
+&& useradd gcs-cloud -g gcs-cloud -M -s /bin/bash \
+&& echo 'gcs-cloud:Docker!' | chpasswd
+
 COPY opensearch.service /lib/systemd/system/
 COPY src .
 
