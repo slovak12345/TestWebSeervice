@@ -130,10 +130,16 @@ COPY data/supervisord/conf.d/gcs_broker_lora_rtk_process.conf  /etc/supervisor/c
 COPY data/supervisord/conf.d/gcs_ui_backend_process.conf  /etc/supervisor/conf.d/
 COPY data/supervisord/conf.d/gcs_cloud_integration_service_process.conf  /etc/supervisor/conf.d/
 
+RUN mkdir /var/log/fluent-bit && mkdir /var/log/gcs-broker-lora-rtk && mkdir /var/log/gcs-cloud-integration-service && mkdir /var/log/gcs-connection-manager && mkdir /var/log/gcs-dispatch-system && mkdir /var/log/gcs-ui-backend
+RUN chown gcs:gcs /var/log/gcs-broker-lora-rtk /var/log/gcs-connection-manager /var/log/gcs-dispatch-system /var/log/gcs-ui-backend
+RUN chown gcs-cloud /var/log/gcs-cloud-integration-service
+RUN chown fluentbit /var/log/fluent-bit
+RUN chmod 755 /var/log/fluent-bit /var/log/gcs-broker-lora-rtk /var/log/gcs-cloud-integration-service /var/log/gcs-connection-manager /var/log/gcs-dispatch-system /var/log/gcs-ui-backend
+
 ENV MONGO_INITDB_ROOT_USERNAME=admin_mdb
 ENV MONGO_INITDB_ROOT_PASSWORD=password_mdb
 
 EXPOSE 9200 9600 10601 27017
-# COPY Docker/webservice/docker-entrypoint.sh /
-# RUN chmod 755 /docker-entrypoint.sh
-# ENTRYPOINT ["/docker-entrypoint.sh"]
+COPY Docker/webservice/docker-entrypoint.sh /
+RUN chmod 755 /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
