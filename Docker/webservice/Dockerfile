@@ -120,6 +120,16 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 
 COPY data/supervisord/supervisord.conf /etc
 
+COPY data/supervisord/conf.d/mongodb_process.conf  /etc/supervisor/conf.d/
+COPY data/supervisord/conf.d/redis_process.conf  /etc/supervisor/conf.d/
+COPY data/supervisord/conf.d/opensearch_process.conf  /etc/supervisor/conf.d/
+COPY data/supervisord/conf.d/fluent_bit_process.conf  /etc/supervisor/conf.d/
+COPY data/supervisord/conf.d/gcs_connection_manager_process.conf  /etc/supervisor/conf.d/
+COPY data/supervisord/conf.d/gcs_dispatch_system_process.conf  /etc/supervisor/conf.d/
+COPY data/supervisord/conf.d/gcs_broker_lora_rtk_process.conf  /etc/supervisor/conf.d/
+COPY data/supervisord/conf.d/gcs_ui_backend_process.conf  /etc/supervisor/conf.d/
+COPY data/supervisord/conf.d/gcs_cloud_integration_service_process.conf  /etc/supervisor/conf.d/
+
 ENV MONGO_INITDB_ROOT_USERNAME=admin_mdb
 ENV MONGO_INITDB_ROOT_PASSWORD=password_mdb
 
