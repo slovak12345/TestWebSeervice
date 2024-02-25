@@ -134,6 +134,6 @@ ENV MONGO_INITDB_ROOT_USERNAME=admin_mdb
 ENV MONGO_INITDB_ROOT_PASSWORD=password_mdb
 
 EXPOSE 9200 9600 10601 27017
-COPY Docker/webservice/docker-entrypoint.sh /
-RUN chmod 755 /docker-entrypoint.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
+# COPY Docker/webservice/docker-entrypoint.sh /
+# RUN chmod 755 /docker-entrypoint.sh
+# ENTRYPOINT ["/docker-entrypoint.sh"]
