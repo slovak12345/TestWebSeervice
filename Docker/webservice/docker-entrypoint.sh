@@ -2,6 +2,9 @@
 sudo iptables -A INPUT -s 127.0.0.1/32 -i eth0 -p tcp -m tcp --dport 6379 -j ACCEPT && \
 sudo iptables -A INPUT -i eth0 -p tcp -m tcp --dport 6379 -j DROP
 
+sudo iptables -A INPUT -s 127.0.0.1/32 -i eth0 -p tcp -m tcp --dport 27017 -j ACCEPT && \
+sudo iptables -A INPUT -i eth0 -p tcp -m tcp --dport 27017 -j DROP
+
 set -e
 
 
