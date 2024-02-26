@@ -154,9 +154,7 @@ chown gcs:root /opt/gcs/secrets.yml && \
 chmod 600 /opt/gcs/secrets.yml
 
 COPY data/mongodb/create_users.js /etc/mongodb/
-RUN sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets.yml)/g; s/myPassword/$(yq '.mongodb.passwd' /opt/gcs/secrets.yml)/g" /etc/mongodb/create_users.js 
-RUN cat /etc/mongodb/create_users.js
-RUN mongosh < /etc/mongodb/create_users.js \
+RUN sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets.yml)/g; s/myPassword/$(yq '.mongodb.passwd' /opt/gcs/secrets.yml)/g" /etc/mongodb/create_users.js \
 && chown mongodb:root /etc/mongodb/create_users.js \
 && chown mongodb:root /etc/mongod.conf \
 && chmod 600 /etc/mongod.conf \
