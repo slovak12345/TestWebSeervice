@@ -153,6 +153,13 @@ chmod 700 /var/lib/redis && \
 chown gcs:root /opt/gcs/secrets.yml && \
 chmod 600 /opt/gcs/secrets.yml
 
+COPY data/mongodb/create_users.js /etc/mongodb/
+RUN sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets.yml)/g; s/myPassword/$(yq '.mongodb.passwd' /opt/gcs/secrets.yml)/g" /etc/mongodb/create_users.js \
+&& chown mongodb:root /etc/mongodb/create_users.js \
+&& chown mongodb:root /etc/mongod.conf \
+&& chmod 600 /etc/mongod.conf \
+&& chmod 600 /etc/mongodb/create_users.js
+
 ENV MONGO_INITDB_ROOT_USERNAME=admin_mdb
 ENV MONGO_INITDB_ROOT_PASSWORD=password_mdb
 
