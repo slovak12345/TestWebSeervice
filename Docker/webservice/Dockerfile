@@ -149,7 +149,9 @@ COPY data/gcs/secrets.yml /opt/gcs/
 RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 && chmod a+x /usr/local/bin/yq && echo "user $(yq '.redis.login' /opt/gcs/secrets.yml) $(echo -n $(yq '.redis.passwd' /opt/gcs/secrets.yml) | sha256sum)" >> /etc/redis/redis.conf && \
 chown redis:root /etc/redis/redis.conf && \
 chmod 600 /etc/redis/redis.conf && \
-chmod 700 /var/lib/redis
+chmod 700 /var/lib/redis && \
+chown gcs:root /opt/gcs/secrets.yml && \
+chmod 600 /opt/gcs/secrets.yml
 
 ENV MONGO_INITDB_ROOT_USERNAME=admin_mdb
 ENV MONGO_INITDB_ROOT_PASSWORD=password_mdb
