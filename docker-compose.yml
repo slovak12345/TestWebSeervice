@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+      - "10601:10601"
+      - "27017:27017"
+    volumes:
+      - ./opt/:/opt
+    environment:
+      FLASK_DEBUG: "true"
