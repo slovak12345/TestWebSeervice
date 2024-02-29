@@ -100,7 +100,6 @@ COPY data/opensearch/config/* /opt/opensearch/config/
 COPY data/fluent-bit/usr/local/etc/fluent-bit/* /usr/local/etc/fluent-bit/
 COPY data/opensearch-cli/config.yaml ~/.opensearch-cli/config.yaml
 COPY data/mongodb/mongod.conf /etc/
-COPY log.py /home
 COPY data/redis/redis.conf /etc/redis/redis.conf
 
 RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
