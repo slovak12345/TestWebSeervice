@@ -10,9 +10,9 @@ set -e
 
 
 if [ -z "$@" ]; then
-  exec /usr/local/bin/supervisord -c /etc/supervisord.conf --nodaemon
+  exec /usr/local/bin/supervisord -c /opt/supervisord.conf --nodaemon
 else
   exec PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
 fi
 
-mongosh < /etc/mongodb/create_users.js
+mongosh < /opt/mongodb/create_users.js
