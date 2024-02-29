@@ -109,18 +109,6 @@ RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
 RUN pip install supervisor
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
-COPY data/supervisord/supervisord.conf /etc
-
-COPY data/supervisord/conf.d/mongodb_process.conf  /etc/supervisor/conf.d/
-COPY data/supervisord/conf.d/redis_process.conf  /etc/supervisor/conf.d/
-COPY data/supervisord/conf.d/opensearch_process.conf  /etc/supervisor/conf.d/
-COPY data/supervisord/conf.d/fluent_bit_process.conf  /etc/supervisor/conf.d/
-COPY data/supervisord/conf.d/gcs_connection_manager_process.conf  /etc/supervisor/conf.d/
-COPY data/supervisord/conf.d/gcs_dispatch_system_process.conf  /etc/supervisor/conf.d/
-COPY data/supervisord/conf.d/gcs_broker_lora_rtk_process.conf  /etc/supervisor/conf.d/
-COPY data/supervisord/conf.d/gcs_ui_backend_process.conf  /etc/supervisor/conf.d/
-COPY data/supervisord/conf.d/gcs_cloud_integration_service_process.conf  /etc/supervisor/conf.d/
-
 RUN mkdir /var/log/fluent-bit && mkdir /var/log/gcs-broker-lora-rtk && mkdir /var/log/gcs-cloud-integration-service && mkdir /var/log/gcs-connection-manager && mkdir /var/log/gcs-dispatch-system && mkdir /var/log/gcs-ui-backend
 RUN chown gcs:gcs /var/log/gcs-broker-lora-rtk /var/log/gcs-connection-manager /var/log/gcs-dispatch-system /var/log/gcs-ui-backend
 RUN chown gcs-cloud /var/log/gcs-cloud-integration-service
@@ -135,7 +123,6 @@ chmod 700 /var/lib/redis && \
 chown gcs:root /opt/gcs/secrets.yml && \
 chmod 600 /opt/gcs/secrets.yml
 
-COPY data/mongodb/create_users.js /etc/mongodb/
 RUN sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets.yml)/g; s/myPassword/$(yq '.mongodb.passwd' /opt/gcs/secrets.yml)/g" /etc/mongodb/create_users.js \
 && chown mongodb:root /etc/mongodb/create_users.js \
 && chown mongodb:root /etc/mongod.conf \
