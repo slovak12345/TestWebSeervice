@@ -1,5 +1,8 @@
 services:
-  web:
+  parser:
+    image: ubuntu-server:0.0.1
+    container_name: webservice
+  core:
     build: .
     ports:
       - "9200:9200"
@@ -8,5 +11,4 @@ services:
       - "27017:27017"
     volumes:
       - ./opt/:/opt
-    environment:
-      FLASK_DEBUG: "true"
+    image: ubuntu-server:0.0.1
