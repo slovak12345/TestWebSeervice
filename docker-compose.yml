@@ -1,7 +1,4 @@
 services:
-  parser:
-    image: ubuntu-server:0.0.1
-    container_name: webservice
   core:
     build: .
     ports:
