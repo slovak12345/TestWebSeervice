@@ -107,7 +107,6 @@ RUN chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
 && chown -R opensearch:opensearch /opt/opensearch/config/ \
 && chown -R fluentbit:fluentbit /usr/local/etc/fluent-bit
 
-RUN pip install python-json-logger
 RUN pip install supervisor
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
