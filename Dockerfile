@@ -82,7 +82,7 @@ curl \
 && apt-get install redis -y \
 && chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
 && chown -R opensearch:opensearch /opt/opensearch/config/ \
-&& chown -R fluentbit:fluentbit /usr/local/etc/fluent-bit \
+&& chown -R fluentbit:fluentbit /opt/fluent-bit \
 && pip install supervisor \
 && ln -s /usr/bin/python3 /usr/bin/python \
 && mkdir /var/log/fluent-bit && mkdir /var/log/gcs-broker-lora-rtk && mkdir /var/log/gcs-cloud-integration-service && mkdir /var/log/gcs-connection-manager && mkdir /var/log/gcs-dispatch-system && mkdir /var/log/gcs-ui-backend \
@@ -90,16 +90,16 @@ curl \
 && chown gcs-cloud /var/log/gcs-cloud-integration-service \
 && chown fluentbit /var/log/fluent-bit \
 && chmod 755 /var/log/fluent-bit /var/log/gcs-broker-lora-rtk /var/log/gcs-cloud-integration-service /var/log/gcs-connection-manager /var/log/gcs-dispatch-system /var/log/gcs-ui-backend \
-&& wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 && chmod a+x /usr/local/bin/yq && echo "user $(yq '.redis.login' /opt/gcs/secrets.yml) $(echo -n $(yq '.redis.passwd' /opt/gcs/secrets.yml) | sha256sum)" >> /etc/redis/redis.conf \
-&& chown redis:root /etc/redis/redis.conf \
-&& chmod 600 /etc/redis/redis.conf \
+&& wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 && chmod a+x /usr/local/bin/yq && echo "user $(yq '.redis.login' /opt/gcs/secrets.yml) $(echo -n $(yq '.redis.passwd' /opt/gcs/secrets.yml) | sha256sum)" >> /opt/redis/redis.conf \
+&& chown redis:root /opt/redis/redis.conf \
+&& chmod 600 /opt/redis/redis.conf \
 && chmod 700 /var/lib/redis \
 && chown gcs:root /opt/gcs/secrets.yml \
 && chmod 600 /opt/gcs/secrets.yml \
-&& sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets.yml)/g; s/myPassword/$(yq '.mongodb.passwd' /opt/gcs/secrets.yml)/g" /etc/mongodb/create_users.js \
-&& chown mongodb:root /etc/mongodb/create_users.js \
-&& chown mongodb:root /etc/mongod.conf \
-&& chmod 600 /etc/mongod.conf \
-&& chmod 600 /etc/mongodb/create_users.js \
+&& sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets.yml)/g; s/myPassword/$(yq '.mongodb.passwd' /opt/gcs/secrets.yml)/g" /opt/mongodb/create_users.js \
+&& chown mongodb:root /opt/mongodb/create_users.js \
+&& chown mongodb:root /opt/mongod.conf \
+&& chmod 600 /opt/mongod.conf \
+&& chmod 600 /opt/mongodb/create_users.js \
 && chmod 755 /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
