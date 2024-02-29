@@ -76,17 +76,6 @@ RUN wget https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/
 && chown -R opensearch /var/log/opensearch-dashboards \
 && rm opensearch-dashboards-2.9.0-linux-x64.tar.gz
 
-RUN wget https://artifacts.opensearch.org/opensearch-clients/opensearch-cli/opensearch-cli-1.1.0-linux-x64.zip \
-&& chmod +x opensearch-cli-1.1.0-linux-x64.zip \
-&& unzip opensearch-cli-1.1.0-linux-x64.zip -d opensearch-cli-1.1.0 \
-&& mkdir /opt/opensearch-cli \
-&& mv ./opensearch-cli-1.1.0/* /opt/opensearch-cli \
-&& rm -r ./opensearch-cli-1.1.0 \
-&& chown -R opensearch:opensearch /opt/opensearch-cli \
-&& mkdir /var/log/opensearch-cli \
-&& chown -R opensearch /var/log/opensearch-cli \
-&& rm opensearch-cli-1.1.0-linux-x64.zip
-
 RUN apt-get install gnupg curl
 
 RUN curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
