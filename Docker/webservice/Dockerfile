@@ -45,11 +45,6 @@ RUN groupadd gcs-cloud \
 && useradd gcs-cloud -g gcs-cloud -M -s /bin/bash \
 && echo 'gcs-cloud:Docker!' | chpasswd
 
-COPY opensearch.service /lib/systemd/system/
-COPY src .
-
-RUN pip install -r python-project-template/requirements-test.txt && pip install -r python-project-template/requirements.txt
-
 RUN wget https://artifacts.opensearch.org/releases/bundle/opensearch/2.9.0/opensearch-2.9.0-linux-x64.tar.gz \
 && chmod +x opensearch-2.9.0-linux-x64.tar.gz \
 && tar -xf opensearch-2.9.0-linux-x64.tar.gz \
