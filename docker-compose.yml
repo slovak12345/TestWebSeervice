@@ -7,5 +7,5 @@ services:
       - "10601:10601"
       - "27017:27017"
     volumes:
-      - ./opt/:/opt
+      - ./opt/:/opt/gcs
     image: ubuntu-server:0.0.1
