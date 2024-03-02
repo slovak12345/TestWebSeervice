@@ -18,11 +18,11 @@ sudo chown mongodb:root /opt/gcs/mongodb/mongod.conf
 sudo chmod 600 /opt/gcs/mongodb/mongod.conf
 
 echo "user $(yq -r '.redis.login' /opt/gcs/secrets/redis_secrets.yml) on ~* &* +@all #$(echo -n $(yq -r '.redis.passwd' /opt/gcs/secrets/redis_secrets.yml) | sha256sum | head -c 64)" >> /opt/gcs/redis/redis.conf
-
+sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets/mongodb_secrets.yml)/g; s/myPassword/$(yq '.mongodb.passwd' /opt/gcs/secrets/mongodb_secrets.yml)/g" /opt/gcs/mongodb/create_users.js
 if [ -z "$@" ]; then
   exec /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon
 else
   exec PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
 fi
 
-mongosh < /opt/gcs/secrets/create_users.js
+mongosh < /opt/gcs/mongodb/create_users.js
