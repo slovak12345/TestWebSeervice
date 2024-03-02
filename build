@@ -1,5 +1,8 @@
 #!/bin/sh
 docker compose up -d
+docker save -o ubuntu-server-0.0.1.tar ubuntu-server:0.0.1
+zip -r server-artifact.zip opt ubuntu-server-0.0.1.tar docker-compose.yml
+# docker load -i ubuntu-server-0.0.1.tar
 # sleep 60
 # curl https://localhost:9200 -ku 'admin:admin'
 # echo "Command for admin panel curl https://localhost:9200 -ku \'admin:admin\'"
