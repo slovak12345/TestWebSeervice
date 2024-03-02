@@ -59,6 +59,7 @@ curl \
 && make \
 && make install \
 && rm -r /fluent-bit-2.1.10 \
+&& cd / \
 && wget https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/2.9.0/opensearch-dashboards-2.9.0-linux-x64.tar.gz \
 && chmod +x opensearch-dashboards-2.9.0-linux-x64.tar.gz \
 && tar -xf opensearch-dashboards-2.9.0-linux-x64.tar.gz \
