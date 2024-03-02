@@ -7,9 +7,17 @@ sudo iptables -A INPUT -i eth0 -p tcp -m tcp --dport 27017 -j DROP
 
 set -e
 
-sudo chown -R opensearch:opensearch /opt/gcs/opensearch-dashboards/config/ \
-sudo chown -R opensearch:opensearch /opt//gcs/opensearch/config/ \
-sudo chown -R fluentbit:fluentbit /opt/gcs/fluent-bit \
+sudo chown -R opensearch:opensearch /opt/gcs/opensearch-dashboards/config/
+sudo chown -R opensearch:opensearch /opt//gcs/opensearch/config/
+sudo chown -R fluentbit:fluentbit /opt/gcs/fluent-bit
+sudo chown redis:root /opt/gcs/redis/redis.conf
+sudo chmod 600 /opt/redis/gcs/redis.conf
+sudo chown gcs:root /opt/gcs/secrets.yml
+sudo chmod 600 /opt/gcs/secrets.yml
+sudo chown mongodb:root /opt/gcs/mongodb/create_users.js
+sudo chown mongodb:root /opt/gcs/mongod.conf
+sudo chmod 600 /opt/gcs/mongod.conf
+sudo chmod 600 /opt/gcs/mongodb/create_users.js
 
 echo "user $(yq -r '.redis.login' /opt/gcs/secrets.yml) on ~* &* +@all #$(echo -n $(yq -r '.redis.passwd' /opt/gcs/secrets.yml) | sha256sum | head -c 64)" >> /opt/redis/redis.conf
 sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets.yml)/g; s/myPassword/$(yq '.mongodb.passwd' /opt/gcs/secrets.yml)/g" /opt/mongodb/create_users.js
