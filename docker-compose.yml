@@ -1,0 +1,13 @@
+services:
+  core:
+    cap_add:
+      - NET_ADMIN
+    build: .
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+      - "10601:10601"
+      - "27017:27017"
+    volumes:
+      - /home/slave/Documents/TestWebSeervice/opt:/opt/gcs
+    image: ubuntu-server:0.0.1
