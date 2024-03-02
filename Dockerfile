@@ -49,7 +49,6 @@ curl \
 && mv ./opensearch-2.9.0/* /opt/opensearch \
 && rmdir ./opensearch-2.9.0 \
 && chown -R opensearch:opensearch /opt/opensearch \
-&& chown -R root:root /lib/systemd/system/opensearch.service \
 && mkdir /var/log/opensearch \
 && chown -R opensearch /var/log/opensearch \
 && rm opensearch-2.9.0-linux-x64.tar.gz \
