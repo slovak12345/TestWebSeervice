@@ -7,7 +7,7 @@ sudo iptables -A INPUT -i eth0 -p tcp -m tcp --dport 27017 -j DROP
 
 set -e
 
-echo "user $(yq '.redis.login' /opt/gcs/secrets.yml) on ~* &* +@all #$(echo -n $(yq '.redis.passwd' /opt/gcs/secrets.yml) | sha256sum | cut -d " " -f1)" >> /opt/redis/redis.conf
+echo "user $(yq -r '.redis.login' /opt/gcs/secrets.yml) on ~* &* +@all #$(echo -n $(yq -r '.redis.passwd' /opt/gcs/secrets.yml) | sha256sum)" >> /opt/redis/redis.conf
 sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets.yml)/g; s/myPassword/$(yq '.mongodb.passwd' /opt/gcs/secrets.yml)/g" /opt/mongodb/create_users.js
 
 if [ -z "$@" ]; then
