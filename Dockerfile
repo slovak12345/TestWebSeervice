@@ -80,9 +80,6 @@ curl \
 && echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list \
 && apt-get update \
 && apt-get install redis -y \
-&& chown -R opensearch:opensearch /opt/opensearch-dashboards/config/ \
-&& chown -R opensearch:opensearch /opt/opensearch/config/ \
-&& chown -R fluentbit:fluentbit /opt/fluent-bit \
 && pip install supervisor \
 && ln -s /usr/bin/python3 /usr/bin/python \
 && mkdir /var/log/fluent-bit && mkdir /var/log/gcs-broker-lora-rtk && mkdir /var/log/gcs-cloud-integration-service && mkdir /var/log/gcs-connection-manager && mkdir /var/log/gcs-dispatch-system && mkdir /var/log/gcs-ui-backend \
@@ -90,6 +87,7 @@ curl \
 && chown gcs-cloud /var/log/gcs-cloud-integration-service \
 && chown fluentbit /var/log/fluent-bit \
 && chmod 755 /var/log/fluent-bit /var/log/gcs-broker-lora-rtk /var/log/gcs-cloud-integration-service /var/log/gcs-connection-manager /var/log/gcs-dispatch-system /var/log/gcs-ui-backend \
+&& cd / \
 && wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 && chmod a+x /usr/local/bin/yq \
 && chown redis:root /opt/redis/redis.conf \
 && chmod 600 /opt/redis/redis.conf \
