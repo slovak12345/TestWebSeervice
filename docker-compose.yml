@@ -1,5 +1,7 @@
 services:
   core:
+    cap_add:
+      - NET_ADMIN
     build: .
     ports:
       - "9200:9200"
