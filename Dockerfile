@@ -30,6 +30,7 @@ lsb-core \
 iptables \
 gnupg \
 curl \
+cargo \
 && groupadd opensearch \
 && useradd opensearch -g opensearch -M -s /bin/bash \
 && echo 'opensearch:Docker!' | chpasswd \
