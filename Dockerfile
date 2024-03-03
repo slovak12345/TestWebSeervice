@@ -31,6 +31,7 @@ iptables \
 gnupg \
 curl \
 cargo \
+libclang-dev \
 && groupadd opensearch \
 && useradd opensearch -g opensearch -M -s /bin/bash \
 && echo 'opensearch:Docker!' | chpasswd \
