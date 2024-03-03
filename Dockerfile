@@ -21,20 +21,15 @@ libssl-dev \
 libyaml-dev \
 libedit-dev \
 libsystemd-dev \
+python3 \
+python3-venv \
+python3-pip \
 tcpdump \
 nodejs \
 lsb-core \
 iptables \
 gnupg \
 curl \
-&& cd /usr/src \
-&& wget https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tgz \   
-&& tar -xzf Python-3.11.5.tgz \
-&& cd Python-3.11.5 \
-&& ./configure --enable-optimizations \
-&& make altinstall \
-&& update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1 \
-&& cd / \
 && groupadd opensearch \
 && useradd opensearch -g opensearch -M -s /bin/bash \
 && echo 'opensearch:Docker!' | chpasswd \
@@ -95,5 +90,13 @@ curl \
 && wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 && chmod a+x /usr/local/bin/yq \
 && chmod 700 /var/lib/redis \
 && mkdir /opt/gcs \
+&& cd /usr/src \
+&& wget https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tgz \   
+&& tar -xzf Python-3.11.5.tgz \
+&& cd Python-3.11.5 \
+&& ./configure --enable-optimizations \
+&& make altinstall \
+&& update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1 \
+&& cd / \
 && chmod 755 /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
