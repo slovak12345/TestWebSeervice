@@ -21,15 +21,20 @@ libssl-dev \
 libyaml-dev \
 libedit-dev \
 libsystemd-dev \
-python3 \
-python3-venv \
-python3-pip \
 tcpdump \
 nodejs \
 lsb-core \
 iptables \
 gnupg \
 curl \
+cd /usr/src \
+&& wget https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tgz \   
+&& tar -xzf Python-3.11.5.tgz \
+&& cd Python-3.11.5 \
+&& ./configure --enable-optimizations \
+&& make altinstall \
+&& update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1 \
+&& cd / \
 && groupadd opensearch \
 && useradd opensearch -g opensearch -M -s /bin/bash \
 && echo 'opensearch:Docker!' | chpasswd \
@@ -81,7 +86,6 @@ curl \
 && apt-get update \
 && apt-get install redis -y \
 && pip install supervisor \
-&& ln -s /usr/bin/python3 /usr/bin/python \
 && mkdir /var/log/fluent-bit && mkdir /var/log/gcs-broker-lora-rtk && mkdir /var/log/gcs-cloud-integration-service && mkdir /var/log/gcs-connection-manager && mkdir /var/log/gcs-dispatch-system && mkdir /var/log/gcs-ui-backend \
 && chown gcs:gcs /var/log/gcs-broker-lora-rtk /var/log/gcs-connection-manager /var/log/gcs-dispatch-system /var/log/gcs-ui-backend \
 && chown gcs-cloud /var/log/gcs-cloud-integration-service \
