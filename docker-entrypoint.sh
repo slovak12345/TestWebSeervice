@@ -22,7 +22,7 @@ redis_user_passwd=$(echo -n $(yq -r '.redis.passwd' /opt/gcs/secrets/redis_secre
 
 redis_user_string="user $redis_user_login on ~* &* +@all #$redis_user_passwd"
 
-if grep -q "^user \$redis_user_login" /opt/gcs/redis/redis.conf; then
+if grep -q "^user $redis_user_login" /opt/gcs/redis/redis.conf; then
     echo "user $redis_user_login exist in redis"
 else
     echo "$redis_user_string" >> /opt/gcs/redis/redis.conf
