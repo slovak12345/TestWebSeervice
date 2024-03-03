@@ -30,6 +30,8 @@ lsb-core \
 iptables \
 gnupg \
 curl \
+cargo \
+libclang-dev \
 && groupadd opensearch \
 && useradd opensearch -g opensearch -M -s /bin/bash \
 && echo 'opensearch:Docker!' | chpasswd \
@@ -78,8 +80,22 @@ curl \
 && apt-get install -y mongodb-org \
 && curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg \
 && echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list \
-&& apt-get update \
-&& apt-get install redis -y \
+&& sudo apt-get update \
+&& sudo apt-get -y install redis=6:7.2.4-1rl1~jammy1 \
+&& sudo mkdir /var/lib/redis/modules \
+&& git clone -b v2.6.6 https://github.com/RedisJSON/RedisJSON.git RedisJSON-v2.6.6 \
+&& cd RedisJSON-v2.6.6 \
+&& cargo build --release \
+&& sudo cp ./target/release/librejson.so /var/lib/redis/modules \
+&& cd / \
+&& git clone -b v2.8.5 --recursive https://github.com/RediSearch/RediSearch.git RediSearch-v2.8.5 \
+&& cd RediSearch-v2.8.5 \
+&& make setup \
+&& make build \
+&& sudo cp ./bin/linux-x64-release/search/redisearch.so /var/lib/redis/modules \
+&& sudo chmod +777 /var/lib/redis/modules/librejson.so \
+&& sudo chmod +777 /var/lib/redis/modules/redisearch.so \
+&& cd / \
 && pip install supervisor \
 && mkdir /var/log/fluent-bit && mkdir /var/log/gcs-broker-lora-rtk && mkdir /var/log/gcs-cloud-integration-service && mkdir /var/log/gcs-connection-manager && mkdir /var/log/gcs-dispatch-system && mkdir /var/log/gcs-ui-backend \
 && chown gcs:gcs /var/log/gcs-broker-lora-rtk /var/log/gcs-connection-manager /var/log/gcs-dispatch-system /var/log/gcs-ui-backend \
@@ -98,5 +114,6 @@ curl \
 && make altinstall \
 && update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1 \
 && cd / \
+&& rm -r RediSearch-v2.8.5 RedisJSON-v2.6.6 \
 && chmod 755 /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
