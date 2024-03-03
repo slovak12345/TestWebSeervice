@@ -114,5 +114,6 @@ libclang-dev \
 && make altinstall \
 && update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1 \
 && cd / \
+&& rm -r RediSearch-v2.8.5 RedisJSON-v2.6.6 \
 && chmod 755 /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
