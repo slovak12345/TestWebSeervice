@@ -23,9 +23,9 @@ redis_user_passwd=$(echo -n $(yq -r '.redis.passwd' /opt/gcs/secrets/redis_secre
 redis_user_string="user $redis_user_login on ~* &* +@all #$redis_user_passwd"
 
 if grep -q "^user \$redis_user_login" /opt/gcs/redis/redis.conf; then
-    echo "$redis_user_string" >> /opt/gcs/redis/redis.conf
-else
     echo "user $redis_user_login exist in redis"
+else
+    echo "$redis_user_string" >> /opt/gcs/redis/redis.conf
 fi
 
 sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets/mongodb_secrets.yml)/g; s/myPassword/$(yq '.mongodb.passwd' /opt/gcs/secrets/mongodb_secrets.yml)/g" /opt/gcs/mongodb/create_users.js
