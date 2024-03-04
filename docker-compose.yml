@@ -9,5 +9,5 @@ services:
       - "10601:10601"
       - "27017:27017"
     volumes:
-      - /home/slave/Documents/TestWebSeervice/opt:/opt/gcs
+      - /home/slava/Documents/TestWebSeervice/opt:/opt/gcs
     image: ubuntu-server:0.0.1
