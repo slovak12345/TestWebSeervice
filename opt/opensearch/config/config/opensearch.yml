@@ -11,9 +11,9 @@ opensearch.ssl.http.enabled: true
 plugins.security.authcz.admin_dn:
   - C = US, ST = California, L = Los Angeles, O = Example Company, CN = mydomain.com
 
-opensearch.ssl.http.pemcert_filepath: /home/slava/Documents/TestWebSeervice/certs/server-key.pem
-opensearch.ssl.http.pemkey_filepath: /home/slava/Documents/TestWebSeervice/certs/server-key.pem
-opensearch.ssl.http.pemtrustedcas_filepath: /home/slava/Documents/TestWebSeervice/certs/ca-cert.pem
+opensearch.ssl.http.pemcert_filepath: /opt/gcs/opensearch/config/certs/server-key.pem
+opensearch.ssl.http.pemkey_filepath: /opt/gcs/opensearch/config/certs/server-key.pem
+opensearch.ssl.http.pemtrustedcas_filepath: /opt/gcs/opensearch/config/certs/ca-cert.pem
 
 opensearch.ssl.http.enabled_protocols:
   - "TLSv1.1"
@@ -31,9 +31,9 @@ opensearch.ssl.http.ciphers:
 
 # Enable TLS/SSL for transport layer
 opensearch.ssl.transport.enabled: true
-opensearch.ssl.transport.pemcert_filepath: /home/slava/Documents/TestWebSeervice/certs/server-key.pem
-opensearch.ssl.transport.pemkey_filepath: /home/slava/Documents/TestWebSeervice/certs/server-key.pem
-opensearch.ssl.transport.pemtrustedcas_filepath: /home/slava/Documents/TestWebSeervice/certs/ca-cert.pem
+opensearch.ssl.transport.pemcert_filepath: /opt/gcs/opensearch/config/certs/server-key.pem
+opensearch.ssl.transport.pemkey_filepath: /opt/gcs/opensearch/config/certs/server-key.pem
+opensearch.ssl.transport.pemtrustedcas_filepath: /opt/gcs/opensearch/config/certs/ca-cert.pem
 
 # Cluster settings
 opensearch.cluster.routing.allocation.disk.threshold_enabled: true
