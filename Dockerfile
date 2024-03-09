@@ -2,6 +2,7 @@ FROM ubuntu:22.04
 ARG DEBIAN_FRONTEND=noninteractive
 EXPOSE 9200 9600 10601 27017
 COPY docker-entrypoint.sh /
+COPY opt/opensearch/opensearch-tar-install.sh .
 RUN echo 'Acquire::Retries "5";' > /etc/apt/apt.conf.d/80-retries \
 && apt update && apt install -y \
 openjdk-11-jdk \
@@ -54,6 +55,7 @@ libclang-dev \
 && mkdir /var/log/opensearch \
 && chown -R opensearch /var/log/opensearch \
 && rm opensearch-2.9.0-linux-x64.tar.gz \
+&& mv opensearch-tar-install.sh /opt/opensearch
 && wget https://github.com/fluent/fluent-bit/archive/refs/tags/v2.1.10.zip \
 && unzip v2.1.10.zip \
 && cd fluent-bit-2.1.10/build/ \

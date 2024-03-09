@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 export OPENSEARCH_HOME=`dirname $(realpath $0)`
-export OPENSEARCH_PATH_CONF=$OPENSEARCH_HOME/config
+export OPENSEARCH_PATH_CONF=/opt/gcs/opensearch/config
 cd $OPENSEARCH_HOME
 
 KNN_LIB_DIR=$OPENSEARCH_HOME/plugins/opensearch-knn/lib
