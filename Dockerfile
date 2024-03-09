@@ -51,11 +51,11 @@ libclang-dev \
 && mkdir /opt/opensearch \
 && mv ./opensearch-2.9.0/* /opt/opensearch \
 && rmdir ./opensearch-2.9.0 \
-&& chown -R opensearch:opensearch /opt/opensearch \
 && mkdir /var/log/opensearch \
 && chown -R opensearch /var/log/opensearch \
 && rm opensearch-2.9.0-linux-x64.tar.gz \
-&& mv opensearch-tar-install.sh /opt/opensearch
+&& mv opensearch-tar-install.sh /opt/opensearch \
+&& chown -R opensearch:opensearch /opt/opensearch \
 && wget https://github.com/fluent/fluent-bit/archive/refs/tags/v2.1.10.zip \
 && unzip v2.1.10.zip \
 && cd fluent-bit-2.1.10/build/ \
