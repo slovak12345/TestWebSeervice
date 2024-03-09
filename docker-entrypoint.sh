@@ -9,7 +9,7 @@ set -e
 
 # sudo chown -R opensearch:opensearch /opt/gcs/opensearch-dashboards/config/
 # sudo chown -R opensearch:opensearch /opt/gcs/opensearch/config/
-sudo chmod 700 /opt/gcs/opensearch/config/
+sudo chmod 700 -R /opt/gcs/opensearch/config/
 # sudo chown -R fluentbit:fluentbit /opt/gcs/fluent-bit
 # sudo chown redis:root /opt/gcs/redis/redis.conf
 # sudo chmod 600 /opt/gcs/redis/redis.conf
