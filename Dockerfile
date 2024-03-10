@@ -80,10 +80,10 @@ RUN curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
    --dearmor \
 && echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list \
 && apt-get update \
-&& apt-get install -y mongodb-org \
-&& curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg \
-&& echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
-RUN sudo apt-get update \
+&& apt-get install -y mongodb-org
+RUN curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg \
+&& echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list \
+&& sudo apt-get update \
 && sudo apt-get -y install redis=6:7.2.4-1rl1~jammy1 \
 && sudo mkdir /var/lib/redis/modules \
 && git clone -b v2.6.6 https://github.com/RedisJSON/RedisJSON.git RedisJSON-v2.6.6 \
