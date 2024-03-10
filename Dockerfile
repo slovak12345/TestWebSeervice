@@ -85,13 +85,15 @@ RUN curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/
 && echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list \
 && sudo apt-get update \
 && sudo apt-get -y install redis=6:7.2.4-1rl1~jammy1 \
-&& sudo mkdir /var/lib/redis/modules \
-&& git clone -b v2.6.6 https://github.com/RedisJSON/RedisJSON.git RedisJSON-v2.6.6 \
+&& sudo mkdir /var/lib/redis/modules
+RUN wget https://github.com/RedisJSON/RedisJSON/archive/refs/tags/v2.6.6.zip \
+&& unzip RedisJSON-v2.6.6.zip \
 && cd RedisJSON-v2.6.6 \
 && cargo build --release \
 && sudo cp ./target/release/librejson.so /var/lib/redis/modules \
 && cd /
-RUN git clone -b v2.8.5 --recursive https://github.com/RediSearch/RediSearch.git RediSearch-v2.8.5 \
+RUN wget https://github.com/RediSearch/RediSearch/archive/refs/tags/v2.8.5.zip \
+&& unzip RediSearch-2.8.5.zip \
 && cd RediSearch-v2.8.5 \
 && make setup \
 && make build \
