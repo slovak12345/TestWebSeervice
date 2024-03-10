@@ -29,13 +29,12 @@ else
     echo "$redis_user_string" >> /opt/gcs/redis/redis.conf
 fi
 
-cp /opt/gcs/mongodb/create_users.js /opt/gcs/mongodb/create_users_m.js
-sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets/mongodb_secrets.yml)/g; s/myPassword/$(yq '.mongodb.password' /opt/gcs/secrets/mongodb_secrets.yml)/g" /opt/gcs/mongodb/create_users_m.js
+
+sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets/mongodb_secrets.yml)/g; s/myPassword/$(yq '.mongodb.password' /opt/gcs/secrets/mongodb_secrets.yml)/g" /opt/gcs/mongodb/create_users.js
 if [ -z "$@" ]; then
   exec /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon
 else
   exec PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
 fi
 
-mongosh < /opt/gcs/mongodb/create_users_m.js
-rm /opt/gcs/mongodb/create_users_m.js
+mongosh < /opt/gcs/mongodb/create_users.js
