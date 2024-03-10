@@ -93,8 +93,8 @@ RUN wget https://github.com/RedisJSON/RedisJSON/archive/refs/tags/v2.6.6.zip \
 && sudo cp ./target/release/librejson.so /var/lib/redis/modules \
 && cd /
 RUN wget https://github.com/RediSearch/RediSearch/archive/refs/tags/v2.8.5.zip \
-&& unzip RediSearch-2.8.5.zip \
-&& cd RediSearch-v2.8.5 \
+&& unzip v2.8.5.zip \
+&& cd RediSearch-2.8.5 \
 && make setup \
 && make build \
 && sudo cp ./bin/linux-x64-release/search/redisearch.so /var/lib/redis/modules \
