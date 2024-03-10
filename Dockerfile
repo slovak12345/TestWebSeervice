@@ -87,8 +87,8 @@ RUN curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/
 && sudo apt-get -y install redis=6:7.2.4-1rl1~jammy1 \
 && sudo mkdir /var/lib/redis/modules
 RUN wget https://github.com/RedisJSON/RedisJSON/archive/refs/tags/v2.6.6.zip \
-&& unzip RedisJSON-v2.6.6.zip \
-&& cd RedisJSON-v2.6.6 \
+&& unzip v2.6.6.zip \
+&& cd RedisJSON-2.6.6 \
 && cargo build --release \
 && sudo cp ./target/release/librejson.so /var/lib/redis/modules \
 && cd /
