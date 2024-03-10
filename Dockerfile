@@ -82,11 +82,11 @@ RUN curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
 && apt-get update \
 && apt-get install -y mongodb-org \
 && curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg \
-&& echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list \
-&& sudo apt-get update \
+&& echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+RUN sudo apt-get update \
 && sudo apt-get -y install redis=6:7.2.4-1rl1~jammy1 \
-&& sudo mkdir /var/lib/redis/modules
-RUN git clone -b v2.6.6 https://github.com/RedisJSON/RedisJSON.git RedisJSON-v2.6.6 \
+&& sudo mkdir /var/lib/redis/modules \
+&& git clone -b v2.6.6 https://github.com/RedisJSON/RedisJSON.git RedisJSON-v2.6.6 \
 && cd RedisJSON-v2.6.6 \
 && cargo build --release \
 && sudo cp ./target/release/librejson.so /var/lib/redis/modules \
