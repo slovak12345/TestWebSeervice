@@ -32,9 +32,7 @@ fi
 
 sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets/mongodb_secrets.yml)/g; s/myPassword/$(yq '.mongodb.password' /opt/gcs/secrets/mongodb_secrets.yml)/g" /tmp/create_users.js
 if [ -z "$@" ]; then
-  exec /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon
+  exec /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon && mongosh < /tmp/create_users.js
 else
-  exec PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
+  exec PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@ && mongosh < /tmp/create_users.js
 fi
-
-mongosh < /tmp/create_users.js
