@@ -90,7 +90,7 @@ RUN git clone -b v2.6.6 https://github.com/RedisJSON/RedisJSON.git RedisJSON-v2.
 && cd RedisJSON-v2.6.6 \
 && cargo build --release \
 && sudo cp ./target/release/librejson.so /var/lib/redis/modules \
-&& cd / \
+&& cd /
 RUN git clone -b v2.8.5 --recursive https://github.com/RediSearch/RediSearch.git RediSearch-v2.8.5 \
 && cd RediSearch-v2.8.5 \
 && make setup \
@@ -105,8 +105,8 @@ RUN git clone -b v2.8.5 --recursive https://github.com/RediSearch/RediSearch.git
 && chown gcs-cloud /var/log/gcs-cloud-integration-service \
 && chown fluentbit /var/log/fluent-bit \
 && chmod 755 /var/log/fluent-bit /var/log/gcs-broker-lora-rtk /var/log/gcs-cloud-integration-service /var/log/gcs-connection-manager /var/log/gcs-dispatch-system /var/log/gcs-ui-backend \
-&& cd / \
-&& wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 && chmod a+x /usr/local/bin/yq \
+&& cd /
+RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 && chmod a+x /usr/local/bin/yq \
 && chmod 700 /var/lib/redis \
 && mkdir /opt/gcs \
 && cd /usr/src \
