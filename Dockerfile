@@ -118,6 +118,6 @@ RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/d
 && make altinstall \
 && update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1 \
 && cd / \
-&& rm -r RediSearch-v2.8.5 RedisJSON-v2.6.6 \
+&& rm -r RediSearch-v2.8.5 RedisJSON-2.6.6 \
 && chmod 755 /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
