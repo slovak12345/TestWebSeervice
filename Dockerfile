@@ -56,16 +56,16 @@ libclang-dev \
 && chown -R opensearch /var/log/opensearch \
 && rm opensearch-2.9.0-linux-x64.tar.gz \
 && mv opensearch-tar-install.sh /opt/opensearch \
-&& chown -R opensearch:opensearch /opt/opensearch \
-&& wget https://github.com/fluent/fluent-bit/archive/refs/tags/v2.1.10.zip \
+&& chown -R opensearch:opensearch /opt/opensearch
+RUN wget https://github.com/fluent/fluent-bit/archive/refs/tags/v2.1.10.zip \
 && unzip v2.1.10.zip \
 && cd fluent-bit-2.1.10/build/ \
 && cmake ../ \
 && make \
 && make install \
 && rm -r /fluent-bit-2.1.10 \
-&& cd / \
-&& wget https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/2.9.0/opensearch-dashboards-2.9.0-linux-x64.tar.gz \
+&& cd /
+RUN wget https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/2.9.0/opensearch-dashboards-2.9.0-linux-x64.tar.gz \
 && chmod +x opensearch-dashboards-2.9.0-linux-x64.tar.gz \
 && tar -xf opensearch-dashboards-2.9.0-linux-x64.tar.gz \
 && mkdir /opt/opensearch-dashboards \
@@ -74,8 +74,8 @@ libclang-dev \
 && chown -R opensearch:opensearch /opt/opensearch-dashboards \
 && mkdir /var/log/opensearch-dashboards \
 && chown -R opensearch /var/log/opensearch-dashboards \
-&& rm opensearch-dashboards-2.9.0-linux-x64.tar.gz \
-&& curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
+&& rm opensearch-dashboards-2.9.0-linux-x64.tar.gz
+RUN curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
    sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
    --dearmor \
 && echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list \
@@ -85,13 +85,13 @@ libclang-dev \
 && echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list \
 && sudo apt-get update \
 && sudo apt-get -y install redis=6:7.2.4-1rl1~jammy1 \
-&& sudo mkdir /var/lib/redis/modules \
-&& git clone -b v2.6.6 https://github.com/RedisJSON/RedisJSON.git RedisJSON-v2.6.6 \
+&& sudo mkdir /var/lib/redis/modules
+RUN git clone -b v2.6.6 https://github.com/RedisJSON/RedisJSON.git RedisJSON-v2.6.6 \
 && cd RedisJSON-v2.6.6 \
 && cargo build --release \
 && sudo cp ./target/release/librejson.so /var/lib/redis/modules \
 && cd / \
-&& git clone -b v2.8.5 --recursive https://github.com/RediSearch/RediSearch.git RediSearch-v2.8.5 \
+RUN git clone -b v2.8.5 --recursive https://github.com/RediSearch/RediSearch.git RediSearch-v2.8.5 \
 && cd RediSearch-v2.8.5 \
 && make setup \
 && make build \
