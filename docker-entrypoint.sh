@@ -29,7 +29,7 @@ else
     echo "$redis_user_string" >> /opt/gcs/redis/redis.conf
 fi
 
-sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets/mongodb_secrets.yml)/g; s/myPassword/$(yq '.mongodb.passwd' /opt/gcs/secrets/mongodb_secrets.yml)/g" /opt/gcs/mongodb/create_users.js
+sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets/mongodb_secrets.yml)/g; s/myPassword/$(yq '.mongodb.password' /opt/gcs/secrets/mongodb_secrets.yml)/g" /opt/gcs/mongodb/create_users.js
 if [ -z "$@" ]; then
   exec /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon
 else
