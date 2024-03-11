@@ -1,2 +1,2 @@
 #!/bin/bash
-"/opt/opensearch/plugins/opensearch-security/tools/securityadmin.sh" -cd "/opt/gcs/opensearch/config/opensearch-security" -icl -key "/opt/gcs/opensearch/config/certs/server-key.pem" -cert "/opt/gcs/opensearch/config/certs/server-cert.pem" -cacert "/opt/gcs/opensearch/config/certs/ca-cert.pem" -nhnv
+"/opt/opensearch/plugins/opensearch-security/tools/securityadmin.sh" -cd "/opt/opensearch/config/opensearch-security" -icl -key "/opt/opensearch/config/kirk-key.pem" -cert "/opt/opensearch/config/kirk.pem" -cacert "/opt/opensearch/config/root-ca.pem" -nhnv
