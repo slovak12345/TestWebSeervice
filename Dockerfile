@@ -3,6 +3,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 EXPOSE 9200 9600 10601 27017
 COPY docker-entrypoint.sh /
 COPY opt/opensearch/opensearch-tar-install.sh .
+COPY thirdparty/scripts/create_users.js /tmp
 RUN echo 'Acquire::Retries "5";' > /etc/apt/apt.conf.d/80-retries \
 && apt update && apt install -y \
 openjdk-11-jdk \
@@ -55,16 +56,16 @@ libclang-dev \
 && chown -R opensearch /var/log/opensearch \
 && rm opensearch-2.9.0-linux-x64.tar.gz \
 && mv opensearch-tar-install.sh /opt/opensearch \
-&& chown -R opensearch:opensearch /opt/opensearch \
-&& wget https://github.com/fluent/fluent-bit/archive/refs/tags/v2.1.10.zip \
+&& chown -R opensearch:opensearch /opt/opensearch
+RUN wget https://github.com/fluent/fluent-bit/archive/refs/tags/v2.1.10.zip \
 && unzip v2.1.10.zip \
 && cd fluent-bit-2.1.10/build/ \
 && cmake ../ \
 && make \
 && make install \
 && rm -r /fluent-bit-2.1.10 \
-&& cd / \
-&& wget https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/2.9.0/opensearch-dashboards-2.9.0-linux-x64.tar.gz \
+&& cd /
+RUN wget https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/2.9.0/opensearch-dashboards-2.9.0-linux-x64.tar.gz \
 && chmod +x opensearch-dashboards-2.9.0-linux-x64.tar.gz \
 && tar -xf opensearch-dashboards-2.9.0-linux-x64.tar.gz \
 && mkdir /opt/opensearch-dashboards \
@@ -73,24 +74,25 @@ libclang-dev \
 && chown -R opensearch:opensearch /opt/opensearch-dashboards \
 && mkdir /var/log/opensearch-dashboards \
 && chown -R opensearch /var/log/opensearch-dashboards \
-&& rm opensearch-dashboards-2.9.0-linux-x64.tar.gz \
-&& curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
+&& rm opensearch-dashboards-2.9.0-linux-x64.tar.gz
+RUN curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
    sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
    --dearmor \
 && echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list \
 && apt-get update \
-&& apt-get install -y mongodb-org \
-&& curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg \
+&& apt-get install -y mongodb-org
+RUN curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg \
 && echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list \
 && sudo apt-get update \
 && sudo apt-get -y install redis=6:7.2.4-1rl1~jammy1 \
-&& sudo mkdir /var/lib/redis/modules \
-&& git clone -b v2.6.6 https://github.com/RedisJSON/RedisJSON.git RedisJSON-v2.6.6 \
-&& cd RedisJSON-v2.6.6 \
+&& sudo mkdir /var/lib/redis/modules
+RUN wget https://github.com/RedisJSON/RedisJSON/archive/refs/tags/v2.6.6.zip \
+&& unzip v2.6.6.zip \
+&& cd RedisJSON-2.6.6 \
 && cargo build --release \
 && sudo cp ./target/release/librejson.so /var/lib/redis/modules \
-&& cd / \
-&& git clone -b v2.8.5 --recursive https://github.com/RediSearch/RediSearch.git RediSearch-v2.8.5 \
+&& cd /
+RUN git clone -b v2.8.5 --recursive https://github.com/RediSearch/RediSearch.git RediSearch-v2.8.5 \
 && cd RediSearch-v2.8.5 \
 && make setup \
 && make build \
@@ -104,8 +106,8 @@ libclang-dev \
 && chown gcs-cloud /var/log/gcs-cloud-integration-service \
 && chown fluentbit /var/log/fluent-bit \
 && chmod 755 /var/log/fluent-bit /var/log/gcs-broker-lora-rtk /var/log/gcs-cloud-integration-service /var/log/gcs-connection-manager /var/log/gcs-dispatch-system /var/log/gcs-ui-backend \
-&& cd / \
-&& wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 && chmod a+x /usr/local/bin/yq \
+&& cd /
+RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 && chmod a+x /usr/local/bin/yq \
 && chmod 700 /var/lib/redis \
 && mkdir /opt/gcs \
 && cd /usr/src \
@@ -116,6 +118,6 @@ libclang-dev \
 && make altinstall \
 && update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1 \
 && cd / \
-&& rm -r RediSearch-v2.8.5 RedisJSON-v2.6.6 \
+&& rm -r RediSearch-v2.8.5 RedisJSON-2.6.6 \
 && chmod 755 /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
