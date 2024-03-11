@@ -17,6 +17,7 @@ plugins:
         pemkey_filepath: /opt/gcs/opensearch/config/certs/server-key.pem
         pemtrustedcas_filepath: /opt/gcs/opensearch/config/certs/ca-cert.pem
       transport:
+        enabled: true
         pemcert_filepath: /opt/gcs/opensearch/config/certs/server-cert.pem
         pemkey_filepath: /opt/gcs/opensearch/config/certs/server-key.pem
         pemtrustedcas_filepath: /opt/gcs/opensearch/config/certs/ca-cert.pem
