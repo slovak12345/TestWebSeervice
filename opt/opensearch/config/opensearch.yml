@@ -9,7 +9,6 @@ discovery.type: single-node
 
 plugins:
   security:
-    config_index_name: .opendistro_security
     ssl:
       http:
         enabled: true
@@ -26,3 +25,17 @@ plugins:
     authcz:
       admin_dn:
         - "CN=mydomain.com,O=Example Company,L=Los Angeles,ST=California,C=US"
+#     nodes_dn:
+#       - 'CN=opensearch-node1,O=ARK,L=YANGON,ST=YANGON,OU=ENGINEERING,C=CA'
+    audit:
+      type: internal_opensearch
+#     enable_snapshot_restore_privilege: true
+#     check_snapshot_restore_write_privileges: true
+#     restapi:
+#       roles_enabled: ["all_access", "security_rest_api_access"]
+
+# opendistro_security.audit.config.disabled_rest_categories: NONE
+# opendistro_security.audit.config.disabled_transport_categories: NONE
+
+# cluster.routing.allocation.disk.threshold_enabled: false
+    
