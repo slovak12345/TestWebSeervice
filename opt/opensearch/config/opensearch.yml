@@ -26,14 +26,3 @@ plugins:
     authcz:
       admin_dn:
         - "CN=mydomain.com,O=Example Company,L=Los Angeles,ST=California,C=US"
-
-# Optional: Enable mutual authentication (client certificates)
-# opensearch.ssl.http.clientauth_mode: optional
-# opensearch.ssl.http.pemcert_filepath: /path/to/client_certificate.pem
-# opensearch.ssl.http.pemkey_filepath: /path/to/client_private_key.pem
-
-# # Cluster settings
-# opensearch.cluster.routing.allocation.disk.threshold_enabled: true
-# opensearch.cluster.routing.allocation.disk.watermark.low: 85%
-# opensearch.cluster.routing.allocation.disk.watermark.high: 90%
-# opensearch.cluster.routing.allocation.disk.watermark.flood_stage: 95%
