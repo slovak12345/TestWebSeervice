@@ -10,25 +10,25 @@ discovery.type: single-node
 plugins:
   security:
     ssl:
+      http:
+        enabled: true
+        pemcert_filepath: /opt/gcs/opensearch/config/certs/server-cert.pem
+        pemkey_filepath: /opt/gcs/opensearch/config/certs/server-key.pem
+        pemtrustedcas_filepath: /opt/gcs/opensearch/config/certs/ca-cert.pem
       transport:
         pemcert_filepath: /opt/gcs/opensearch/config/certs/server-cert.pem
         pemkey_filepath: /opt/gcs/opensearch/config/certs/server-key.pem
         pemtrustedcas_filepath: /opt/gcs/opensearch/config/certs/ca-cert.pem
         enforce_hostname_verification: false
-      http:
-        enabled: false
     allow_unsafe_democertificates: true
+    authcz:
+      admin_dn:
+        - "CN=mydomain.com,O=Example Company,L=Los Angeles,ST=California,C=US"
 
 # Optional: Enable mutual authentication (client certificates)
 # opensearch.ssl.http.clientauth_mode: optional
 # opensearch.ssl.http.pemcert_filepath: /path/to/client_certificate.pem
 # opensearch.ssl.http.pemkey_filepath: /path/to/client_private_key.pem
-
-# # Enable TLS/SSL for transport layer
-# opensearch.ssl.transport.enabled: true
-# opensearch.ssl.transport.pemcert_filepath: /opt/gcs/opensearch/config/certs/server-key.pem
-# opensearch.ssl.transport.pemkey_filepath: /opt/gcs/opensearch/config/certs/server-key.pem
-# opensearch.ssl.transport.pemtrustedcas_filepath: /opt/gcs/opensearch/config/certs/ca-cert.pem
 
 # # Cluster settings
 # opensearch.cluster.routing.allocation.disk.threshold_enabled: true
