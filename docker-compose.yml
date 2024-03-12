@@ -1,5 +1,5 @@
 services:
-  core:
+  base:
     build: docker/base/Dockerfile
     image: webservice-base:0.0.1
   webservice:
