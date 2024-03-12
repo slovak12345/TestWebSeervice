@@ -99,18 +99,11 @@ RUN git clone -b v2.8.5 --recursive https://github.com/RediSearch/RediSearch.git
 && sudo cp ./bin/linux-x64-release/search/redisearch.so /var/lib/redis/modules \
 && sudo chmod +777 /var/lib/redis/modules/librejson.so \
 && sudo chmod +777 /var/lib/redis/modules/redisearch.so \
-&& cd / \
-&& pip install supervisor \
-&& mkdir /var/log/fluent-bit && mkdir /var/log/gcs-broker-lora-rtk && mkdir /var/log/gcs-cloud-integration-service && mkdir /var/log/gcs-connection-manager && mkdir /var/log/gcs-dispatch-system && mkdir /var/log/gcs-ui-backend \
-&& chown gcs:gcs /var/log/gcs-broker-lora-rtk /var/log/gcs-connection-manager /var/log/gcs-dispatch-system /var/log/gcs-ui-backend \
-&& chown gcs-cloud /var/log/gcs-cloud-integration-service \
-&& chown fluentbit /var/log/fluent-bit \
-&& chmod 755 /var/log/fluent-bit /var/log/gcs-broker-lora-rtk /var/log/gcs-cloud-integration-service /var/log/gcs-connection-manager /var/log/gcs-dispatch-system /var/log/gcs-ui-backend \
+&& cd / 
+RUN pip install supervisor \
+&& wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 && chmod a+x /usr/local/bin/yq \
 && cd /
-RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 && chmod a+x /usr/local/bin/yq \
-&& chmod 700 /var/lib/redis \
-&& mkdir /opt/gcs \
-&& cd /usr/src \
+RUN cd /usr/src \
 && wget https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tgz \   
 && tar -xzf Python-3.11.5.tgz \
 && cd Python-3.11.5 \
@@ -118,6 +111,4 @@ RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/d
 && make altinstall \
 && update-alternatives --install /usr/bin/python python /usr/local/bin/python3.11 1 \
 && cd / \
-&& rm -r RediSearch-v2.8.5 RedisJSON-2.6.6 \
-&& chmod 755 /docker-entrypoint.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
+&& rm -r RediSearch-v2.8.5 RedisJSON-2.6.6
