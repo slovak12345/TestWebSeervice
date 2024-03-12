@@ -51,7 +51,6 @@ libclang-dev \
 && mkdir /var/log/opensearch \
 && chown -R opensearch /var/log/opensearch \
 && rm opensearch-2.9.0-linux-x64.tar.gz \
-&& mv opensearch-tar-install.sh /opt/opensearch \
 && chown -R opensearch:opensearch /opt/opensearch
 RUN wget https://github.com/fluent/fluent-bit/archive/refs/tags/v2.1.10.zip \
 && unzip v2.1.10.zip \
