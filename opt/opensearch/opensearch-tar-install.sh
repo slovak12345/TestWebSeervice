@@ -3,7 +3,7 @@
 # Copyright OpenSearch Contributors
 # SPDX-License-Identifier: Apache-2.0
 
-export OPENSEARCH_HOME=`dirname $(realpath $0)`
+export OPENSEARCH_HOME=/opt/opensearch
 export OPENSEARCH_PATH_CONF=/opt/gcs/opensearch/config
 cd $OPENSEARCH_HOME
 

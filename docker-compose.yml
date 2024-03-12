@@ -1,5 +1,8 @@
 services:
-  core:
+  base:
+    build: docker/base/
+    image: webservice-base:0.0.1
+  webservice:
     cap_add:
       - NET_ADMIN
     build: .
@@ -11,3 +14,6 @@ services:
     volumes:
       - /home/slava/Documents/TestWebSeervice/opt:/opt/gcs
     image: ubuntu-server:0.0.1
+    depends_on:
+      - base
+    
