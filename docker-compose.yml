@@ -1,11 +1,11 @@
 services:
   base:
-    build: docker/base/Dockerfile
+    build: docker/base/
     image: webservice-base:0.0.1
   webservice:
     cap_add:
       - NET_ADMIN
-    build: Dockerfile
+    build: .
     ports:
       - "9200:9200"
       - "9600:9600"
