@@ -196,7 +196,7 @@ server.host: 0.0.0.0
 # Set the value of this setting to true to enable the ml commons dashboards
 # ml_commons_dashboards.enabled: false
 
-opensearch.hosts: [https://0.0.0.0:9200]
+opensearch.hosts: [http://0.0.0.0:9200]
 opensearch.ssl.verificationMode: none
 opensearch.username: admin
 opensearch.password: admin
