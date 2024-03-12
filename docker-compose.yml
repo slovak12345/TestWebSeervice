@@ -2,8 +2,6 @@ services:
   base:
     build: docker/base/
     image: webservice-base:0.0.1
-    profiles:
-      - donotstart
   webservice:
     cap_add:
       - NET_ADMIN
