@@ -5,7 +5,7 @@ services:
   webservice:
     cap_add:
       - NET_ADMIN
-    build: docker/webservice/Dockerfile
+    build: Dockerfile
     ports:
       - "9200:9200"
       - "9600:9600"
