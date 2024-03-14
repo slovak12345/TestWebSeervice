@@ -1,4 +1,4 @@
-FROM webservice-base:0.0.1
+FROM gcs-base:0.1
 ARG DEBIAN_FRONTEND=noninteractive
 EXPOSE 9200 9600 10601 27017
 COPY docker-entrypoint.sh /

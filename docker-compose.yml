@@ -1,7 +1,7 @@
 services:
   base:
     build: docker/base/
-    image: webservice-base:0.0.1
+    image: gcs-base:0.1
   webservice:
     cap_add:
       - NET_ADMIN
@@ -13,7 +13,7 @@ services:
       - "27017:27017"
     volumes:
       - /home/slava/Documents/TestWebSeervice/opt:/opt/gcs
-    image: ubuntu-server:0.0.1
+    image: gcs-main:0.1
     depends_on:
       - base
     
