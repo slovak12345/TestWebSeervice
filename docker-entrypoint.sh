@@ -23,7 +23,7 @@ redis_user_passwd=$(echo -n $(yq -r '.redis.password' /opt/gcs/secrets/secrets.y
 
 redis_user_string="user $redis_user_login on ~* &* +@all #$redis_user_passwd"
 
-sed -i "s/gcs_user_template|$redis_user_string/g" /opt/gcs/redis/redis.conf
+sed -i "s/gcs_user_template/$redis_user_string/g" /opt/gcs/redis/redis.conf
 
 sed -i "s/myUser/$(yq '.mongo.login' /opt/gcs/secrets/secrets.yml)/g; s/myPassword/$(yq '.mongo.password' /opt/gcs/secrets/secrets.yml)/g" /tmp/create_users.js
 
