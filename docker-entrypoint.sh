@@ -31,6 +31,8 @@ sed -i "s/fluent-bit-login/$(yq '.fluent-bit.login' /opt/gcs/secrets/secrets.yml
 
 if [ -z "$@" ]; then
   /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon
+  sleep 40
+  mongosh < /tmp/create_users.js
 else
   PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
 fi
