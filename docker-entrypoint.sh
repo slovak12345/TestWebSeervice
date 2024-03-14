@@ -18,19 +18,14 @@ set -e
 # sudo chown mongodb:root /opt/gcs/mongodb/mongod.conf
 # sudo chmod 600 /opt/gcs/mongodb/mongod.conf
 
-redis_user_login=$(yq -r '.redis.login' /opt/gcs/secrets/redis_secrets.yml)
-redis_user_passwd=$(echo -n $(yq -r '.redis.password' /opt/gcs/secrets/redis_secrets.yml) | sha256sum | head -c 64)
+redis_user_login=$(yq -r '.redis.login' /opt/gcs/secrets/secrets.yml)
+redis_user_passwd=$(echo -n $(yq -r '.redis.password' /opt/gcs/secrets/secrets.yml) | sha256sum | head -c 64)
 
 redis_user_string="user $redis_user_login on ~* &* +@all #$redis_user_passwd"
 
-if grep -q "^user $redis_user_login" /opt/gcs/redis/redis.conf; then
-    echo "user $redis_user_login exist in redis"
-else
-    echo "$redis_user_string" >> /opt/gcs/redis/redis.conf
-fi
+sed -i "s|gcs_user_template|$redis_user_string|" /opt/gcs/redis/redis.conf
 
-
-sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets/mongodb_secrets.yml)/g; s/myPassword/$(yq '.mongodb.password' /opt/gcs/secrets/mongodb_secrets.yml)/g" /tmp/create_users.js
+sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets/secrets.yml)/g; s/myPassword/$(yq '.mongodb.password' /opt/gcs/secrets/secrets.yml)/g" /tmp/create_users.js
 if [ -z "$@" ]; then
   exec /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon
 else
