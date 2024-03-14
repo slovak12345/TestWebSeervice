@@ -21,7 +21,7 @@ set -e
 redis_user_login=$(yq -r '.redis.login' /opt/gcs/secrets/secrets.yml)
 redis_user_passwd=$(echo -n $(yq -r '.redis.password' /opt/gcs/secrets/secrets.yml) | sha256sum | head -c 64)
 
-redis_user_string="user $redis_user_login on ~* &* +@all #$redis_user_passwd"
+redis_user_string="user $redis_user_login on ~* \&* +@all #$redis_user_passwd"
 
 sed -i "s/gcs_user_template/$redis_user_string/g" /opt/gcs/redis/redis.conf
 
