@@ -33,9 +33,10 @@ chown mongodb:mongodb -R /opt/gcs/mongodb
 
 if [ -z "$@" ]; then
   /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf
-  sleep 60
+  sleep 15
   mongosh < /tmp/create_users.js
   rm /tmp/create_users.js
+  sleep infinity
 else
   PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
 fi
