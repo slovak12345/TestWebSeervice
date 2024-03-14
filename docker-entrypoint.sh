@@ -32,7 +32,10 @@ sed -i "s/fluent-bit-login/$(yq '.fluent-bit.login' /opt/gcs/secrets/secrets.yml
 chown mongodb:mongodb -R /opt/gcs/mongodb
 
 if [ -z "$@" ]; then
-  exec /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon
+  /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf
+  sleep 60
+  mongosh < /tmp/create_users.js
+  rm /tmp/create_users.js
 else
-  exec PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
+  PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
 fi
