@@ -30,9 +30,7 @@ sed -i "s/myUser/$(yq '.mongo.login' /opt/gcs/secrets/secrets.yml)/g; s/myPasswo
 sed -i "s/fluent-bit-login/$(yq '.fluent-bit.login' /opt/gcs/secrets/secrets.yml)/g; s/fluent-bit-password/$(yq '.fluent-bit.password' /opt/gcs/secrets/secrets.yml)/g" /opt/gcs/fluent-bit/fluent-bit2opensearch.conf
 
 if [ -z "$@" ]; then
-  /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon
-  sleep 40
-  mongosh < /tmp/create_users.js
+  exec /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon
 else
-  PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
+  exec PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
 fi
