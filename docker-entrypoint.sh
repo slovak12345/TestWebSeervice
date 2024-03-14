@@ -30,6 +30,8 @@ mv  /opt/gcs/redis/redis.conf.new  /opt/gcs/redis/redis.conf
 sed -i "s/myUser/$(yq '.mongodb.login' /opt/gcs/secrets/secrets.yml)/g; s/myPassword/$(yq '.mongodb.password' /opt/gcs/secrets/secrets.yml)/g" /tmp/create_users.js
 if [ -z "$@" ]; then
   exec /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon
+  sleep 50
+  mongosh < /tmp/create_users.js
 else
   exec PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
 fi
