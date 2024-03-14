@@ -30,7 +30,7 @@ sed -i "s/myUser/$(yq '.mongo.login' /opt/gcs/secrets/secrets.yml)/g; s/myPasswo
 sed -i "s/fluent-bit-login/$(yq '.fluent-bit.login' /opt/gcs/secrets/secrets.yml)/g; s/fluent-bit-password/$(yq '.fluent-bit.password' /opt/gcs/secrets/secrets.yml)/g" /opt/gcs/fluent-bit/fluent-bit2opensearch.conf
 
 if [ -z "$@" ]; then
-  exec /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon
+  /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf --nodaemon
 else
-  exec PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
+  PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
 fi
