@@ -12,4 +12,5 @@ RUN mv opensearch-tar-install.sh /opt/opensearch \
 && chmod 700 /var/lib/redis \
 && mkdir /opt/gcs \
 && chmod 755 /docker-entrypoint.sh
+EXPOSE 14550-20000
 ENTRYPOINT ["/docker-entrypoint.sh"]
