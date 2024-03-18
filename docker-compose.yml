@@ -13,7 +13,7 @@ services:
       - "27017:27017"
       - "14550-20000:14550-20000"
     volumes:
-      - /home/slava/Documents/TestWebSeervice/opt:/opt/gcs
+      - "./opt:/opt/gcs"
     image: gcs-main:0.1
     depends_on:
       - base
