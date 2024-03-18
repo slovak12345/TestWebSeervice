@@ -7,7 +7,7 @@ sudo iptables -A INPUT -i eth0 -p tcp -m tcp --dport 27017 -j DROP
 
 set -e
 
-sudo chmod 777 opensearch:opensearch /opt/gcs/opensearch/opensearch-tar-install.sh
+sudo chmod 777 /opt/gcs/opensearch/opensearch-tar-install.sh
 # sudo chown -R opensearch:opensearch /opt/gcs/opensearch/config/
 # sudo chmod 700 -R /opt/gcs/opensearch/config/
 # sudo chown -R fluentbit:fluentbit /opt/gcs/fluent-bit
