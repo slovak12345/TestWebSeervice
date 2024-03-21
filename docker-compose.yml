@@ -6,7 +6,11 @@ services:
     cap_add:
       - NET_ADMIN
     build: .
-    network_mode: "host"
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+      - "10601:10601"
+      - "27017:27017"
     volumes:
       - "./opt/gcs:/opt/gcs"
     image: gcs-main:0.1
