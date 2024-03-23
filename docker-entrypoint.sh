@@ -25,7 +25,7 @@ redis_user_string="user $redis_user_login on ~* \&* +@all #$redis_user_passwd"
 
 sed -i "s/gcs_user_template/$redis_user_string/g" /opt/gcs/redis/redis.conf
 
-sed -i "s/myUser/$(yq '.mongo.login' /opt/gcs/secrets/secrets.yml)/g; s/myPassword/$(yq '.mongo.password' /opt/gcs/secrets/secrets.yml)/g" /tmp/create_users.js
+
 
 sed -i "s/fluent-bit-login/$(yq '.fluent-bit.login' /opt/gcs/secrets/secrets.yml)/g; s/fluent-bit-password/$(yq '.fluent-bit.password' /opt/gcs/secrets/secrets.yml)/g" /opt/gcs/fluent-bit/fluent-bit2opensearch.conf
 
@@ -34,8 +34,11 @@ chown mongodb:mongodb -R /opt/gcs/mongodb
 if [ -z "$@" ]; then
   /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf
   sleep 15
-  mongosh < /tmp/create_users.js | echo "no need create user in mongodb"
-  rm /tmp/create_users.js | echo "user create file already removed"
+  if [[ -f /tmp/create_users.js ]]; then 
+    sed -i "s/myUser/$(yq '.mongo.login' /opt/gcs/secrets/secrets.yml)/g; s/myPassword/$(yq '.mongo.password' /opt/gcs/secrets/secrets.yml)/g" /tmp/create_users.js
+    mongosh < /tmp/create_users.js
+    rm /tmp/create_users.js
+  fi
   sleep infinity
 else
   PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
