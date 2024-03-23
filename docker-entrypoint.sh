@@ -35,7 +35,7 @@ if [ -z "$@" ]; then
   /usr/local/bin/supervisord -c /opt/gcs/supervisord/supervisord.conf
   sleep 15
   mongosh < /tmp/create_users.js
-  rm /tmp/create_users.js
+  rm /tmp/create_users.js | echo "no need create user in mongodb"
   sleep infinity
 else
   PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin $@
