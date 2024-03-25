@@ -1,6 +1,6 @@
 FROM gcs-base:0.1
 ARG DEBIAN_FRONTEND=noninteractive
-EXPOSE 9200 9600 10601 27017
+EXPOSE 9200 9600 27017
 COPY docker-entrypoint.sh /
 COPY thirdparty/scripts/mongodb/create_users.js /tmp
 RUN mkdir /var/log/fluent-bit && mkdir /var/log/gcs-cloud-integration-service \
